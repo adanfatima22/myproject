@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Projects</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora:wght@500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================
+       🎨 Custom Theme
+    ========================== */
+    :root {
+      --primary-color: #007bff;
+      --secondary-color: #ff4081;
+      --background-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-color: #333;
+      --tag-bg: #e9ecef;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      margin: 0;
+      padding: 0 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1, h2, h3 {
+      font-family: "Lora", serif;
+      color: var(--primary-color);
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    /* ==========================
+       🌐 Navigation
+    ========================== */
+    nav {
+      background-color: #333;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      border-radius: 8px;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1rem;
+      position: relative;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: var(--secondary-color);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--secondary-color);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* ==========================
+       📦 Projects
+    ========================== */
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .projects-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid #ddd;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .technologies {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+
+    .tech-tag {
+      background-color: var(--tag-bg);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .tech-tag:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .project-link {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 6px;
+      margin-top: 1rem;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .project-link:hover {
+      background-color: var(--secondary-color);
+      transform: scale(1.05);
+    }
+
+    /* ==========================
+       📱 Responsive
+    ========================== */
+    @media (max-width: 768px) {
+      nav a {
+        margin: 0.5rem;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .project-card {
+        padding: 1.2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a href="homepage.html">Home</a>
+    <a href="projects.html">Projects</a>
+    <a href="skills.html">Skills</a>
+  </nav>
+
+  <h1>My Projects</h1>
+
+  <div class="projects-container">
+    <div class="project-card">
+      <h2>Smart Healthcare Monitoring System</h2>
+      <p><strong>Description:</strong> A comprehensive IoT-based healthcare monitoring system that tracks vital signs and provides real-time alerts to healthcare providers.</p>
+      
+      <div class="technologies">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">IoT</span>
+        <span class="tech-tag">Machine Learning</span>
+        <span class="tech-tag">React</span>
+        <span class="tech-tag">Node.js</span>
+      </div>
+
+      <h3>Problem Statement</h3>
+      <p>Traditional healthcare monitoring systems lack real-time tracking and immediate response capabilities, leading to delayed interventions in critical situations.</p>
+
+      <h3>Unique Proposition</h3>
+      <p>Integrates AI-powered predictive analytics with IoT sensors to provide proactive health monitoring and automated emergency response system.</p>
+
+      <h3>Competitor Analysis</h3>
+      <p>While existing solutions like HealthTracker and MediMonitor offer basic vital sign monitoring, our system provides predictive analytics and seamless integration with hospital management systems.</p>
+
+      <a href="https://github.com/yourusername/healthcare-monitoring" class="project-link">View on GitHub</a>
+    </div>
+
+    <div class="project-card">
+      <h2>EcoTrack - Sustainable Living App</h2>
+      <p><strong>Description:</strong> A mobile application that helps users track and reduce their carbon footprint through daily lifestyle choices.</p>
+      
+      <div class="technologies">
+        <span class="tech-tag">React Native</span>
+        <span class="tech-tag">Firebase</span>
+        <span class="tech-tag">Node.js</span>
+        <span class="tech-tag">MongoDB</span>
+      </div>
+
+      <h3>Problem Statement</h3>
+      <p>Individuals struggle to understand and reduce their environmental impact due to lack of personalized guidance and tracking tools.</p>
+
+      <h3>Unique Proposition</h3>
+      <p>Combines gamification with AI-powered recommendations to make sustainable living engaging and achievable for everyday users.</p>
+
+      <h3>Competitor Analysis</h3>
+      <p>Current apps like GreenStep and EcoLife focus mainly on carbon calculation but lack personalized recommendations and community engagement features.</p>
+
+      <a href="https://github.com/yourusername/eco-track" class="project-link">View on GitHub</a>
+    </div>
+  </div>
+</body>
+</html>
