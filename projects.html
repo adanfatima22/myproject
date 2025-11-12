@@ -9,9 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora:wght@500&display=swap" rel="stylesheet">
 
   <style>
-    /* ==========================
-       🎨 Custom Theme
-    ========================== */
     :root {
       --primary-color: #007bff;
       --secondary-color: #ff4081;
@@ -25,10 +22,9 @@
       font-family: "Poppins", sans-serif;
       color: var(--text-color);
       background-color: var(--background-color);
-      margin: 0;
+      margin: 0 auto;
       padding: 0 1rem;
       max-width: 1200px;
-      margin: 0 auto;
     }
 
     h1, h2, h3 {
@@ -36,13 +32,6 @@
       color: var(--primary-color);
     }
 
-    p {
-      line-height: 1.6;
-    }
-
-    /* ==========================
-       🌐 Navigation
-    ========================== */
     nav {
       background-color: #333;
       padding: 1rem;
@@ -82,9 +71,6 @@
       width: 100%;
     }
 
-    /* ==========================
-       📦 Projects
-    ========================== */
     h1 {
       text-align: center;
       margin-bottom: 2rem;
@@ -146,9 +132,69 @@
       transform: scale(1.05);
     }
 
-    /* ==========================
-       📱 Responsive
-    ========================== */
+    .filter-bar {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    #project-search {
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      min-width: 280px;
+      font-size: 1rem;
+    }
+
+    .tech-filters {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      max-width: 640px;
+    }
+
+    .tech-btn {
+      background: var(--tag-bg);
+      border: 1px solid transparent;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .tech-btn.selected {
+      background: var(--primary-color);
+      color: white;
+      border-color: rgba(0,0,0,0.06);
+    }
+
+    #no-results {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #666;
+      display: none;
+      margin-top: 2rem;
+    }
+
+    /* Timer Style */
+    #visit-timer {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #333;
+      color: #fff;
+      font-size: 0.9rem;
+      font-family: 'Poppins', sans-serif;
+      padding: 8px 14px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+    }
+
     @media (max-width: 768px) {
       nav a {
         margin: 0.5rem;
@@ -174,11 +220,16 @@
 
   <h1>My Projects</h1>
 
+  <div class="filter-bar" aria-label="Project filters">
+    <input id="project-search" type="search" placeholder="Search projects by title or description..." aria-label="Search projects" />
+    <div id="tech-filters" class="tech-filters" aria-label="Filter by technology"></div>
+    <button id="clear-filters" class="project-link" style="background-color: #6c757d;">Clear</button>
+  </div>
+
   <div class="projects-container">
     <div class="project-card">
       <h2>Smart Healthcare Monitoring System</h2>
       <p><strong>Description:</strong> A comprehensive IoT-based healthcare monitoring system that tracks vital signs and provides real-time alerts to healthcare providers.</p>
-      
       <div class="technologies">
         <span class="tech-tag">Python</span>
         <span class="tech-tag">IoT</span>
@@ -186,41 +237,130 @@
         <span class="tech-tag">React</span>
         <span class="tech-tag">Node.js</span>
       </div>
-
       <h3>Problem Statement</h3>
       <p>Traditional healthcare monitoring systems lack real-time tracking and immediate response capabilities, leading to delayed interventions in critical situations.</p>
-
-      <h3>Unique Proposition</h3>
-      <p>Integrates AI-powered predictive analytics with IoT sensors to provide proactive health monitoring and automated emergency response system.</p>
-
-      <h3>Competitor Analysis</h3>
-      <p>While existing solutions like HealthTracker and MediMonitor offer basic vital sign monitoring, our system provides predictive analytics and seamless integration with hospital management systems.</p>
-
       <a href="https://github.com/yourusername/healthcare-monitoring" class="project-link">View on GitHub</a>
     </div>
 
     <div class="project-card">
       <h2>EcoTrack - Sustainable Living App</h2>
       <p><strong>Description:</strong> A mobile application that helps users track and reduce their carbon footprint through daily lifestyle choices.</p>
-      
       <div class="technologies">
         <span class="tech-tag">React Native</span>
         <span class="tech-tag">Firebase</span>
         <span class="tech-tag">Node.js</span>
         <span class="tech-tag">MongoDB</span>
       </div>
-
       <h3>Problem Statement</h3>
       <p>Individuals struggle to understand and reduce their environmental impact due to lack of personalized guidance and tracking tools.</p>
-
-      <h3>Unique Proposition</h3>
-      <p>Combines gamification with AI-powered recommendations to make sustainable living engaging and achievable for everyday users.</p>
-
-      <h3>Competitor Analysis</h3>
-      <p>Current apps like GreenStep and EcoLife focus mainly on carbon calculation but lack personalized recommendations and community engagement features.</p>
-
       <a href="https://github.com/yourusername/eco-track" class="project-link">View on GitHub</a>
     </div>
   </div>
+
+  <p id="no-results">No projects found. Try a different search or filter.</p>
+
+  <div id="visit-timer">
+    Time on page: <span id="time-elapsed">00:00:00</span>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const projectsContainer = document.querySelector('.projects-container');
+      const projectCards = Array.from(document.querySelectorAll('.project-card'));
+      const searchInput = document.getElementById('project-search');
+      const techFiltersContainer = document.getElementById('tech-filters');
+      const clearBtn = document.getElementById('clear-filters');
+      const noResults = document.getElementById('no-results');
+
+      const techSet = new Set();
+      const cardTechs = new Map();
+
+      projectCards.forEach(card => {
+        const tags = Array.from(card.querySelectorAll('.tech-tag')).map(t => t.textContent.trim());
+        cardTechs.set(card, tags);
+        tags.forEach(t => techSet.add(t));
+      });
+
+      Array.from(techSet).sort().forEach(tech => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tech-btn';
+        btn.textContent = tech;
+        btn.dataset.tech = tech;
+        techFiltersContainer.appendChild(btn);
+      });
+
+      const techButtons = Array.from(techFiltersContainer.querySelectorAll('.tech-btn'));
+
+      function getSelectedTechs() {
+        return techButtons.filter(b => b.classList.contains('selected')).map(b => b.dataset.tech);
+      }
+
+      function matchesSearch(card, query) {
+        if (!query) return true;
+        const title = card.querySelector("h2")?.textContent.toLowerCase() || "";
+        const desc = card.querySelector("p")?.textContent.toLowerCase() || "";
+        return title.includes(query.toLowerCase()) || desc.includes(query.toLowerCase());
+      }
+
+      function matchesTechs(card, selectedTechs) {
+        if (!selectedTechs.length) return true;
+        const tags = cardTechs.get(card) || [];
+        return selectedTechs.every(t => tags.includes(t));
+      }
+
+      function filter() {
+        const query = searchInput.value.trim().toLowerCase();
+        const selected = getSelectedTechs();
+        let visibleCount = 0;
+
+        projectCards.forEach(card => {
+          const show = matchesSearch(card, query) && matchesTechs(card, selected);
+          card.style.display = show ? '' : 'none';
+          if (show) visibleCount++;
+        });
+
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+
+      searchInput.addEventListener('input', filter);
+
+      techButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('selected');
+          filter();
+        });
+      });
+
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        techButtons.forEach(b => b.classList.remove('selected'));
+        filter();
+      });
+
+      filter();
+
+      // Timer Logic
+      const timeDisplay = document.getElementById("time-elapsed");
+      let seconds = 0;
+
+      const formatTime = (s) => {
+        const hrs = String(Math.floor(s / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+        const secs = String(s % 60).padStart(2, '0');
+        return `${hrs}:${mins}:${secs}`;
+      };
+
+      const timer = setInterval(() => {
+        seconds++;
+        timeDisplay.textContent = formatTime(seconds);
+      }, 1000);
+
+      window.addEventListener("beforeunload", () => {
+        clearInterval(timer);
+        console.log(`User stayed for ${formatTime(seconds)}`);
+      });
+    });
+  </script>
 </body>
 </html>

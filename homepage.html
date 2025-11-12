@@ -1,61 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        nav {
-            background-color: #333;
-            padding: 1rem;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin-right: 20px;
-        }
-        .profile-section {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-        .profile-image {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Portfolio</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Lora:wght@500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #007bff;
+      --secondary-color: #ff4081;
+      --background-color: #f8f9fa;
+      --card-bg: #ffffff;
+      --text-color: #333;
+      --tag-bg: #e9ecef;
+      --nav-bg: #333;
+      --nav-text: #ffffff;
+      --shadow: rgba(0,0,0,0.08);
+      --shadow-strong: rgba(0,0,0,0.15);
+    }
+
+    [data-theme="dark"] {
+      --primary-color: #5ab3ff;
+      --secondary-color: #ff79a9;
+      --background-color: #0f1724;
+      --card-bg: #0b1220;
+      --text-color: #e6eef8;
+      --tag-bg: #142333;
+      --nav-bg: #071022;
+      --nav-text: #e6eef8;
+      --shadow: rgba(0,0,0,0.6);
+      --shadow-strong: rgba(0,0,0,0.7);
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      margin: 0 auto;
+      padding: 0 1rem;
+      max-width: 1200px;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    h1, h2, h3 {
+      font-family: "Lora", serif;
+      color: var(--primary-color);
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      background-color: var(--nav-bg);
+      color: var(--nav-text);
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      border-radius: 8px;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    nav a {
+      color: var(--nav-text);
+      text-decoration: none;
+      position: relative;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: var(--secondary-color);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--secondary-color);
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    /* Profile Section */
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin: 2rem 0;
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .profile-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 18px var(--shadow-strong);
+    }
+
+    .profile-image {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary-color);
+    }
+
+    /* About Section */
+    section {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px var(--shadow);
+      margin-bottom: 2rem;
+    }
+
+    .theme-toggle {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--nav-text);
+      padding: 0.4rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .theme-toggle:focus {
+      outline: 2px solid var(--secondary-color);
+      outline-offset: 2px;
+    }
+
+    /* Timer Box */
+    #visit-timer {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #333;
+      color: #fff;
+      font-size: 0.9rem;
+      font-family: 'Poppins', sans-serif;
+      padding: 8px 14px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+      opacity: 0.85;
+    }
+
+    [data-theme="dark"] #visit-timer {
+      background: #0b1220;
+      color: #e6eef8;
+      border: 1px solid #2a3a5a;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .profile-section {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .profile-image {
+        width: 150px;
+        height: 150px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <a href="homepage.html">Home</a>
-        <a href="projects.html">Projects</a>
-        <a href="skills.html">Skills</a>
-    </nav>
+  <nav>
+    <a href="homepage.html">Home</a>
+    <a href="projects.html">Projects</a>
+    <a href="skills.html">Skills</a>
+    <button id="theme-toggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle theme">🌙 Dark</button>
+  </nav>
 
-    <div class="profile-section">
-        <img src="girl.png" alt="My Profile Picture" class="profile-image">
-        <div>
-            <h1>Welcome to My Portfolio</h1>
-            <p>Hello! I'm [Your Name], a passionate web developer with expertise in creating 
-               modern and responsive websites. I specialize in front-end development 
-               and love bringing creative ideas to life through code.</p>
-        </div>
+  <div class="profile-section">
+    <img src="girl.png" alt="My Profile Picture" class="profile-image">
+    <div>
+      <h1>Welcome to My Portfolio</h1>
+      <p>Hello! I'm Adan Fatima, a passionate web developer with expertise in creating modern and responsive websites. I specialize in front-end development and love bringing creative ideas to life through code.</p>
     </div>
+  </div>
 
-    <section>
-        <h2>About Me</h2>
-        <p>I have experience working with HTML, CSS, JavaScript, and various modern 
-           frameworks. My goal is to create user-friendly and accessible web experiences 
-           that make a positive impact.</p>
-    </section>
+  <section>
+    <h2>About Me</h2>
+    <p>I have experience working with HTML, CSS, JavaScript, and various modern frameworks. My goal is to create user-friendly and accessible web experiences that make a positive impact.</p>
+  </section>
+
+  <div id="visit-timer">
+    Time on page: <span id="time-elapsed">00:00:00</span>
+  </div>
+
+  <script>
+    (function () {
+      const toggle = document.getElementById('theme-toggle');
+      if (!toggle) return;
+
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const saved = localStorage.getItem('theme');
+      const initial = saved ? saved : (prefersDark ? 'dark' : 'light');
+
+      document.documentElement.setAttribute('data-theme', initial);
+
+      function updateToggle() {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        toggle.textContent = isDark ? '🌙 Dark' : '☀ Light';
+        toggle.setAttribute('aria-pressed', String(isDark));
+      }
+
+      updateToggle();
+
+      toggle.addEventListener('click', function () {
+        const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        updateToggle();
+      });
+    })();
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const timeDisplay = document.getElementById("time-elapsed");
+      let seconds = 0;
+
+      const formatTime = (s) => {
+        const hrs = String(Math.floor(s / 3600)).padStart(2, '0');
+        const mins = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+        const secs = String(s % 60).padStart(2, '0');
+        return `${hrs}:${mins}:${secs}`;
+      };
+
+      const timer = setInterval(() => {
+        seconds++;
+        timeDisplay.textContent = formatTime(seconds);
+      }, 1000);
+
+      window.addEventListener("beforeunload", () => {
+        clearInterval(timer);
+        console.log(`User stayed for ${formatTime(seconds)}`);
+      });
+    });
+  </script>
 </body>
 </html>
